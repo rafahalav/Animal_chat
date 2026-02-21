@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Animal-Chat Pro</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="login-screen" class="card">
+        <h2>🐾 ANIMAL-CHAT</h2>
+        <input type="email" id="email" placeholder="E-mail">
+        <input type="password" id="password" placeholder="Senha">
+        <button id="btnLogin">ENTRAR</button>
+        <button id="btnSignUp" class="btn-secondary">CRIAR CONTA</button>
+    </div>
+
+    <div id="chat-screen" class="hidden">
+        <div id="chat-window"></div>
+        <div class="controls">
+            <select id="animalChoice">
+                <option value="capivara">Capivara</option>
+                <option value="gato">Gato</option>
+                <option value="cachorro">Cachorro</option>
+                <option value="llama">Llama</option>
+                <option value="coruja">Coruja</option>
+            </select>
+            <input type="text" id="msgInput" placeholder="Diga algo...">
+            <button id="btnSend">Enviar</button>
+        </div>
+    </div>
+
+    <script type="module" src="script.js"></script>
+</body>
+</html>
