@@ -55,11 +55,12 @@ document.getElementById('btnSend').onclick = async () => {
     const animal = document.getElementById('animalChoice').value;
     if(!text) return;
 
-    await addDoc(collection(db, "messages"), {
-        text, animal, user: auth.currentUser.email, createdAt: serverTimestamp()
-    });
-    document.getElementById('msgInput').value = '';
-};
+await addDoc(collection(db, "messages"), {
+    user: auth.currentUser.displayName || auth.currentUser.email, // <--- ESTA LINHA
+    text: messageText,
+    animal: animalChoice,
+    createdAt: serverTimestamp()
+});
 
 // Carregar Mensagens
 function initChat() {
@@ -71,7 +72,7 @@ function initChat() {
             const d = doc.data();
             const pre = document.createElement('pre');
             const line = "_".repeat(d.text.length + 2);
-            pre.textContent = `${d.user}:\n  ${line}\n < ${d.text} >\n  ${"-".repeat(d.text.length + 2)}\n${arts[d.animal]}`;
+            pre.textContent = `${d.nome || d.user}:\n  ${line}\n < ${d.text} >\n  ${"-".repeat(d.text.length + 2)}\n${arts[d.animal]}`;
             chatWin.appendChild(pre);
         });
         chatWin.scrollTop = chatWin.scrollHeight;
