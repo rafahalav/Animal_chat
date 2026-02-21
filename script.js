@@ -56,11 +56,13 @@ document.getElementById('btnSend').onclick = async () => {
     if(!text) return;
 
 await addDoc(collection(db, "messages"), {
-    user: auth.currentUser.displayName || auth.currentUser.email, // <--- ESTA LINHA
-    text: messageText,
-    animal: animalChoice,
-    createdAt: serverTimestamp()
-});
+            user: auth.currentUser.displayName || auth.currentUser.email,
+            text: text,
+            animal: animal,
+            createdAt: serverTimestamp()
+        });
+    } // ESTA CHAVE NA LINHA 63 É O QUE ESTÁ FALTANDO!
+}; 
 
 // Carregar Mensagens
 function initChat() {
