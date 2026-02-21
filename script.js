@@ -4,9 +4,15 @@ import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTim
 
 // SUBSTITUA PELOS SEUS DADOS DO CONSOLE DO FIREBASE
 
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyAWv6cNgaQvLmGfRPL2TpbkGX9PvwJV17k",
+  authDomain: "animal-chat-a461f.firebaseapp.com",
+  projectId: "animal-chat-a461f",
+  storageBucket: "animal-chat-a461f.firebasestorage.app",
+  messagingSenderId: "617539469606",
+  appId: "1:617539469606:web:46cf36c3b2b1bd3b80c1e7",
+  measurementId: "G-SX3F7D5N3K"
+};
 
 const arts = {
     capivara: `      \\   _.._..,_,_\n         (          )\n          ]  o  o  [\n          )    _   (\n         /  _  _  _ \\`,
