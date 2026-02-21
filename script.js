@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, updateProfile } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
 import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
 // SUBSTITUA PELOS SEUS DADOS DO CONSOLE DO FIREBASE
@@ -77,3 +77,17 @@ function initChat() {
         chatWin.scrollTop = chatWin.scrollHeight;
     });
 }
+
+// Lógica para atualizar o nome
+document.getElementById('btnUpdateName').onclick = async () => {
+    const newName = document.getElementById('new-username').value;
+    if (newName && auth.currentUser) {
+        try {
+            await updateProfile(auth.currentUser, { displayName: newName });
+            alert("Apelido atualizado! Atualize a página para ver a mudança.");
+            document.getElementById('new-username').value = "";
+        } catch (e) {
+            alert("Erro: " + e.message);
+        }
+    }
+};
