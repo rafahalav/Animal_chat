@@ -14,6 +14,10 @@ const firebaseConfig = {
   measurementId: "G-SX3F7D5N3K"
 };
 
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
 const arts = {
     capivara: `      \\   _.._..,_,_\n         (          )\n          ]  o  o  [\n          )    _   (\n         /  _  _  _ \\`,
     gato: `      \\    /\\_/\\\n       \\  ( o.o )\n           > ^ <`,
