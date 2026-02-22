@@ -17,14 +17,13 @@ const auth = getAuth(app);
 const db = getFirestore(app);
 
 const arts = {
-    capivara: `      \\    _..---.._     (       )  ] o o [  ) _  (\\ / _ _ \\\\`,
-    gato: `      \\    /\\_/\\           \\ ( o.o )   > ^ <`,
-    cachorro: `      \\   __      \\ _ / / \\ \\  ( o o ) \\ ( === ) \\  \\ _ /`,
-    llama: `      \\    _\\n   \\\\ / \\\\ \\   | oo |   | -- |   |  |   | \\\\  \\\\   |___|/`,
-    coruja: `      \\    , _ ,   \\ ( o,o )   /)_)   "-"`
+    capivara: `      \\    _..---.._ \n     (       ) \n  ] o o [  ) \n _  (\\ / _ _ \\\\`,
+    gato: `      \\    /\\_/\\ \n           \\ ( o.o ) \n            > ^ <`,
+    cachorro: `      \\   __      \\ _ / \n / \\ \\  ( o o ) \n \\ ( === ) \\  \\ _ /`,
+    llama: `      \\    _\\n   \\\\ / \\\\ \\ \n   | oo | \n  | -- | \n  |  | \n  | \\\\  \\\\ \n  |___|/`,
+    coruja: `      \\    , _ , \n   \\ ( o,o ) \n   /)_) \n   "-"`
 };
 
-// Monitor de autenticação
 onAuthStateChanged(auth, (user) => {
     if (user) {
         document.getElementById('login-screen').classList.add('hidden');
@@ -36,11 +35,10 @@ onAuthStateChanged(auth, (user) => {
     }
 });
 
-// Criar Conta / Login
 document.getElementById('btnSignUp').onclick = () => {
     const email = document.getElementById('email').value;
     const pass = document.getElementById('password').value;
-    createUserWithEmailAndPassword(auth, email, pass).then(() => alert("Conta criada!")).catch(e => alert(e.message));
+    createUserWithEmailAndPassword(auth, email, pass).catch(e => alert(e.message));
 };
 
 document.getElementById('btnLogin').onclick = () => {
@@ -49,41 +47,33 @@ document.getElementById('btnLogin').onclick = () => {
     signInWithEmailAndPassword(auth, email, pass).catch(e => alert(e.message));
 };
 
-// Enviar Mensagem
 document.getElementById('btnSend').onclick = async () => {
-    const messageText = document.getElementById('msgInput').value;
-    const animalChoice = document.getElementById('animalChoice').value;
-
-    if (messageText && auth.currentUser) {
+    const messageInput = document.getElementById('messageInput') || document.getElementById('msgInput');
+    const animalChoice = document.getElementById('animalChoice');
+    
+    if (messageInput.value && auth.currentUser) {
         try {
             await addDoc(collection(db, "messages"), {
                 user: auth.currentUser.displayName || auth.currentUser.email,
-                text: messageText,
-                animal: animalChoice,
+                text: messageInput.value,
+                animal: animalChoice.value,
                 createdAt: serverTimestamp()
             });
-            document.getElementById('msgInput').value = "";
-        } catch (e) {
-            console.error("Erro:", e);
-        }
+            messageInput.value = "";
+        } catch (e) { console.error(e); }
     }
 };
 
-// Atualizar Nome de Usuário
 document.getElementById('btnUpdateName').onclick = async () => {
     const newName = document.getElementById('new-username').value;
     if (newName && auth.currentUser) {
         try {
             await updateProfile(auth.currentUser, { displayName: newName });
-            alert("Apelido atualizado!");
-            document.getElementById('new-username').value = "";
-        } catch (e) {
-            alert("Erro: " + e.message);
-        }
+            alert("Nome atualizado!");
+        } catch (e) { alert(e.message); }
     }
 };
 
-// Carregar Mensagens
 function initChat() {
     const q = query(collection(db, "messages"), orderBy("createdAt", "asc"));
     onSnapshot(q, (snap) => {
@@ -92,8 +82,7 @@ function initChat() {
         snap.forEach(doc => {
             const d = doc.data();
             const pre = document.createElement('pre');
-            const line = "_".repeat(d.text.length + 2);
-            pre.textContent = `${d.user}:\n < ${d.text} >\n ${line}\n${arts[d.animal]}`;
+            pre.textContent = `${d.user}:\n < ${d.text} >\n${arts[d.animal] || ''}`;
             chatWin.appendChild(pre);
         });
         chatWin.scrollTop = chatWin.scrollHeight;
