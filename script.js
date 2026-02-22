@@ -48,18 +48,18 @@ document.getElementById('btnLogin').onclick = () => {
 };
 
 document.getElementById('btnSend').onclick = async () => {
-    const messageInput = document.getElementById('messageInput') || document.getElementById('msgInput');
+    const msgField = document.getElementById('msgInput'); // Bate com seu HTML
     const animalChoice = document.getElementById('animalChoice');
     
-    if (messageInput.value && auth.currentUser) {
+    if (msgField.value && auth.currentUser) {
         try {
             await addDoc(collection(db, "messages"), {
                 user: auth.currentUser.displayName || auth.currentUser.email,
-                text: messageInput.value,
+                text: msgField.value,
                 animal: animalChoice.value,
                 createdAt: serverTimestamp()
             });
-            messageInput.value = "";
+            msgField.value = "";
         } catch (e) { console.error(e); }
     }
 };
@@ -69,7 +69,7 @@ document.getElementById('btnUpdateName').onclick = async () => {
     if (newName && auth.currentUser) {
         try {
             await updateProfile(auth.currentUser, { displayName: newName });
-            alert("Nome atualizado!");
+            alert("Nome salvo!");
         } catch (e) { alert(e.message); }
     }
 };
