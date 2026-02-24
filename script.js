@@ -48,9 +48,8 @@ document.getElementById('btnLogin').onclick = () => {
 };
 
 document.getElementById('btnSend').onclick = async () => {
-    const msgField = document.getElementById('msgInput'); // Bate com seu HTML
+    const msgField = document.getElementById('msgInput');
     const animalChoice = document.getElementById('animalChoice');
-    
     if (msgField.value && auth.currentUser) {
         try {
             await addDoc(collection(db, "messages"), {
@@ -69,7 +68,7 @@ document.getElementById('btnUpdateName').onclick = async () => {
     if (newName && auth.currentUser) {
         try {
             await updateProfile(auth.currentUser, { displayName: newName });
-            alert("Nome salvo!");
+            alert("Nome atualizado!");
         } catch (e) { alert(e.message); }
     }
 };
