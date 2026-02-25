@@ -48,18 +48,18 @@ document.getElementById('btnLogin').onclick = () => {
 };
 
 document.getElementById('btnSend').onclick = async () => {
-    const msgField = document.getElementById('msgInput');
+    const msgInput = document.getElementById('msgInput');
     const animalChoice = document.getElementById('animalChoice');
-    if (msgField.value && auth.currentUser) {
+    if (msgInput.value && auth.currentUser) {
         try {
             await addDoc(collection(db, "messages"), {
                 user: auth.currentUser.displayName || auth.currentUser.email,
-                text: msgField.value,
+                text: msgInput.value,
                 animal: animalChoice.value,
                 createdAt: serverTimestamp()
             });
-            msgField.value = "";
-        } catch (e) { console.error(e); }
+            msgInput.value = "";
+        } catch (e) { alert(e.message); }
     }
 };
 
@@ -68,7 +68,7 @@ document.getElementById('btnUpdateName').onclick = async () => {
     if (newName && auth.currentUser) {
         try {
             await updateProfile(auth.currentUser, { displayName: newName });
-            alert("Nome atualizado!");
+            alert("Apelido salvo!");
         } catch (e) { alert(e.message); }
     }
 };
