@@ -59,7 +59,7 @@ document.getElementById('btnSend').onclick = async () => {
                 createdAt: serverTimestamp()
             });
             msgInput.value = "";
-        } catch (e) { alert(e.message); }
+        } catch (e) { console.error(e); }
     }
 };
 
