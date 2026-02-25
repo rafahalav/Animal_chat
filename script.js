@@ -48,17 +48,17 @@ document.getElementById('btnLogin').onclick = () => {
 };
 
 document.getElementById('btnSend').onclick = async () => {
-    const msgInput = document.getElementById('msgInput');
+    const msgField = document.getElementById('msgInput');
     const animalChoice = document.getElementById('animalChoice');
-    if (msgInput.value && auth.currentUser) {
+    if (msgField.value && auth.currentUser) {
         try {
             await addDoc(collection(db, "messages"), {
                 user: auth.currentUser.displayName || auth.currentUser.email,
-                text: msgInput.value,
+                text: msgField.value,
                 animal: animalChoice.value,
                 createdAt: serverTimestamp()
             });
-            msgInput.value = "";
+            msgField.value = "";
         } catch (e) { console.error(e); }
     }
 };
